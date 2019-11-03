@@ -6,6 +6,7 @@ from keras.utils import to_categorical
 import numpy as np
 import random
 from scipy import misc
+from skimage import io
 
 def check_folder(log_dir):
     if not os.path.exists(log_dir):
@@ -115,7 +116,7 @@ def load_tiny() :
         sChildPath = os.path.join(os.path.join(trainPath, sChild), 'images')
         annotations[sChild] = j
         for c in os.listdir(sChildPath):
-            X = misc.imread(os.path.join(sChildPath, c), mode='RGB')
+            X = io.imread(os.path.join(sChildPath, c))
             if len(np.shape(X)) == 2:
                 X_train[i] = np.array([X, X, X])
             else:
@@ -140,7 +141,7 @@ def load_tiny() :
     for sChild in os.listdir(testPath):
         if val_annotations_map[sChild] in annotations.keys():
             sChildPath = os.path.join(testPath, sChild)
-            X = misc.imread(sChildPath, mode='RGB')
+            X = io.imread(sChildPath)
             if len(np.shape(X)) == 2:
                 X_test[i] = np.array([X, X, X])
             else:
